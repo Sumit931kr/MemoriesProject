@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL : 'http://localhost:5000' })
+const API = axios.create({ baseURL : ' https://memories-backnd.herokuapp.com/' })
 
 API.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')) {
@@ -18,4 +18,5 @@ export const likePost = (id) => API.patch(`/posts/${id}/likePost`)
 
 export const signup = (FormData) => API.post('/users/signup', FormData);
 export const signin = (FormData) => API.post('/users/signin', FormData);
-
+export const signupgoogle = (googleData) => API.post('/users/signupgoogle', googleData);
+export const signingoogle = (googleData) => API.post('/users/signingoogle', googleData);

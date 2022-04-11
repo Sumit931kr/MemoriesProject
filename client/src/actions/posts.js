@@ -1,5 +1,5 @@
 import * as api from '../api/index';
-import { FETCH_ALL, DELETE, UPDATE, CREATE } from '../constants/actionTypes';
+import { FETCH_ALL, DELETE, UPDATE, CREATE , LIKE} from '../constants/actionTypes';
 // Action Creators
 
 export const getPosts = () => async (dispatch) => {
@@ -29,6 +29,7 @@ export const updatepost = (id, post) => async (dispatch) => {
 }
  
 export const createpost= (post) => async (dispatch) =>{
+  
     try {
         const { data } = await api.createpost(post);
         dispatch({type: CREATE , payload : data })
@@ -48,14 +49,13 @@ export const deletepost = (id) => async (dispatch) => {
     } 
 }
 
-
 export const likePost = (id) => async (dispatch) => {
-    try {
-      const { data } = await api.likePost(id);
+    const user = JSON.parse(localStorage.getItem('profile'));
   
-      dispatch({ type: UPDATE, payload: data });
+    try {
+      const { data } = await api.likePost(id, user?.token);
+      dispatch({ type: LIKE, payload: data });
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   };
-

@@ -10,7 +10,7 @@ import { AUTH } from '../../constants/actionTypes';
 import useStyle from './style'
 import Input from './input'
 import Icon from './Icon'
-import { signup, signin} from '../../actions/auth';
+import { signup, signin , googlesignup, googlesignin} from '../../actions/auth';
 
 
 const InitialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
@@ -25,10 +25,9 @@ const Auth = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [FormData, setFormData] = useState(InitialState);
-
-
+  
   const handleShowPassword = () => setShowPassword(!showPassword);
-
+  
   const switchMode = () => {
     setFormData(InitialState);
     setIsSignup((prevIsSignup) => !prevIsSignup);
@@ -38,32 +37,41 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(isSignup){
-      console.log(FormData);
-     dispatch(signup(FormData, Navigate))
+      dispatch(signup(FormData, Navigate))
     }
     else{
       dispatch(signin(FormData, Navigate))
     }
-   
+    
   };
-
+  
   const handleChange = (e) => {
     setFormData({ ...FormData, [e.target.name]: e.target.value })
-    console.log(FormData);
   }
-
-
+  
+  
   const googleSuccess = async (res) => {
-    const result = res?.profileObj;
-    const token = res?.tokenId;
- 
-    try {
-      dispatch({ type: AUTH, data: { result, token } });
+    const result = await res?.profileObj;
+    const token = await res?.tokenId;
+ const googleData = ({email : result?.email , firstName : result?.givenName, lastName : result?.familyName})
 
-      Navigate('/');
-    } catch (error) {
-      console.log(error);
+     dispatch({ type: AUTH, data: { result, token } });
+    if(isSignup){
+      try {
+        dispatch(googlesignup(googleData, Navigate)) 
+      } catch (error) {
+        console.log(error);
+      }
     }
+    else{
+      try {
+        dispatch(googlesignin(googleData, Navigate));
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
+    
   };
 
   const googleError = () => alert('Google Sign In was unsuccessful. Try again later');

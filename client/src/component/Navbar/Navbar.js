@@ -18,7 +18,7 @@ const Navbar = () => {
   const Logout = () => {
     dispatch({ type: 'LOGOUT', })
 
-    Navigate('/');
+    Navigate('/auth');
     setUser(null);
   }
 
@@ -32,7 +32,7 @@ const Navbar = () => {
     }
     setUser(JSON.parse(localStorage.getItem('profile')));
 
-  }, [location])
+  }, [location,Navigate])
 
 
   const classes = UseStyle()

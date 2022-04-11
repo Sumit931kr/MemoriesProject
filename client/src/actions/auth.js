@@ -23,3 +23,23 @@ export const signin = (FormData, Navigate) => async(dispatch) =>{
         console.log(error);
     }
 }
+
+export const googlesignup = (googleData, Navigate) => async(dispatch) =>{
+    try {
+        await api.signupgoogle(googleData);
+        Navigate('/')
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const googlesignin = (googleData, Navigate ) => async (dispatch) =>{
+    try {
+        await api.signingoogle(googleData);  
+        Navigate('/');
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+

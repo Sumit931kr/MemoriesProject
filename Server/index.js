@@ -13,7 +13,9 @@ app.use(bodyParser.json({limit: "30mb", extented : true }))
 app.use(bodyParser.urlencoded({limit: "30mb", extented : true }))
 app.use(cors());
 
-
+// app.use('/',(req,res)=>{
+//     res.send("Aoye, balle balle ");
+// })
 app.use('/posts', postRouter)
 app.use('/users', userRouter);
 
