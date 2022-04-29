@@ -6,7 +6,7 @@ import Posts from '../Posts/posts'
 import Form from '../Form/form'
 import UseStyle from './style'
 
-const Home = () => {
+const Home = (props) => {
     const [currentId, setcurrentId] = useState(0)
     const dispatch = useDispatch();
     const classes = UseStyle()
@@ -21,10 +21,10 @@ const Home = () => {
         <Container>
           <Grid container className={classes.mainContainer} justifyContent ="space-between" alignItems='center' spacing={3}>
             <Grid item xs={12} sm={7}>
-              <Posts setcurrentId={setcurrentId}/>
+              <Posts setcurrentId={setcurrentId} showalertdanger ={props.showalertdanger} showalertsuccess={props.showalertsuccess}/>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Form currentId={currentId} setcurrentId={setcurrentId}/>
+              <Form currentId={currentId} setcurrentId={setcurrentId} showalertdanger={props.showalertdanger} showalertsuccess={props.showalertsuccess}/>
             </Grid>
           </Grid>
 

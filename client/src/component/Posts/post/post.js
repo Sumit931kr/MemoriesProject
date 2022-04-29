@@ -10,7 +10,7 @@ import { deletepost, likePost } from '../../../actions/posts'
 
 import UseStyle from './style'
 
-const Post = ({ post, setcurrentId }) => {
+const Post = ({ post, setcurrentId ,showalertdanger , showalertsuccess}) => {
   const dispatch = useDispatch();
   const classes = UseStyle();
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -58,7 +58,7 @@ const Post = ({ post, setcurrentId }) => {
           <Likes />
         </Button>
         {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-        <Button size="small" color="secondary" onClick={() => {setcurrentId(null);  dispatch(deletepost(post._id))}}>
+        <Button size="small" color="secondary" onClick={() => {setcurrentId(null);  dispatch(deletepost(post._id, showalertdanger , showalertsuccess))}}>
           <DeleteIcon fontSize="small" /> Delete
         </Button>
         )}

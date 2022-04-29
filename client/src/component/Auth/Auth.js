@@ -15,7 +15,7 @@ import { signup, signin , googlesignup, googlesignin} from '../../actions/auth';
 
 const InitialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
 
-const Auth = () => {
+const Auth = ({showalertsuccess , showalertdanger}) => {
 
 
   const classes = useStyle();
@@ -35,14 +35,19 @@ const Auth = () => {
   };
 
   const handleSubmit = (e) => {
+  
     e.preventDefault();
     if(isSignup){
-      dispatch(signup(FormData, Navigate))
+      if(FormData.password === FormData.confirmPassword){
+      dispatch(signup(FormData, Navigate, showalertsuccess , showalertdanger))
+      }
+     else{
+        showalertdanger("Password Doesn't Match")
+     } 
+    }else{
+      dispatch(signin(FormData, Navigate,  showalertsuccess , showalertdanger))
+     
     }
-    else{
-      dispatch(signin(FormData, Navigate))
-    }
-    
   };
   
   const handleChange = (e) => {
@@ -58,16 +63,20 @@ const Auth = () => {
      dispatch({ type: AUTH, data: { result, token } });
     if(isSignup){
       try {
-        dispatch(googlesignup(googleData, Navigate)) 
+        dispatch(googlesignup(googleData, Navigate, showalertsuccess , showalertdanger)) 
+        // props.showalertsuccess("Success full Google signup")
       } catch (error) {
         console.log(error);
+        // props.showalertdanger("Failed the Google Signup")
       }
     }
     else{
       try {
-        dispatch(googlesignin(googleData, Navigate));
+        dispatch(googlesignin(googleData, Navigate, showalertsuccess , showalertdanger));
+        // props.showalertsuccess("Success full signin")
       } catch (error) {
         console.log(error);
+        // props.showalertdanger("Failed the Google Signin")
       }
 
     }
